@@ -1,0 +1,112 @@
+[gd_scene load_steps=20 format=3 uid="uid://i0uieqtobhtl"]
+
+[ext_resource type="PackedScene" uid="uid://tkl58qa3nud2" path="res://scene/groundlight.tscn" id="1_qyqa3"]
+[ext_resource type="Script" path="res://scripts/Cubeup_Up.gd" id="2_6ibnn"]
+[ext_resource type="Script" path="res://scripts/Cube_Down.gd" id="3_6m0bn"]
+[ext_resource type="Script" path="res://scripts/Cube_Right.gd" id="4_5uvek"]
+[ext_resource type="Script" path="res://scripts/Cube_Left.gd" id="5_mgorc"]
+[ext_resource type="Script" path="res://scripts/InitializeXR.gd" id="6_1hkag"]
+[ext_resource type="PackedScene" uid="uid://bqqbwkpowpx8s" path="res://objects/sabers/leftsaber.tscn" id="7_eo5kn"]
+[ext_resource type="Script" path="res://scripts/leftsaber.gd" id="8_kt0ce"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="9_xv5tn"]
+[ext_resource type="PackedScene" uid="uid://i71x7k7aqn0j" path="res://objects/sabers/rightsaber.tscn" id="10_ywbp3"]
+[ext_resource type="Script" path="res://scripts/rightsaber.gd" id="11_7p3r0"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="12_ppel7"]
+[ext_resource type="AudioStream" uid="uid://bp8jjnpdpxek2" path="res://scene/Healing.mp3" id="13_sdi2y"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r0dak"]
+sky_top_color = Color(0.388235, 0, 0.960784, 1)
+sky_horizon_color = Color(0.729412, 0.54225, 0.542073, 1)
+ground_horizon_color = Color(0.729412, 0.54225, 0.542073, 1)
+
+[sub_resource type="Sky" id="Sky_dpt8a"]
+sky_material = SubResource("ProceduralSkyMaterial_r0dak")
+
+[sub_resource type="Environment" id="Environment_8w03s"]
+background_mode = 2
+sky = SubResource("Sky_dpt8a")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jtb88"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p2egm"]
+size = Vector3(10, 0.5, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_p6yrf"]
+points = PackedVector3Array(-5, -0.25, -5, -5, 0.25, -5, 5, -0.25, -5, -5, -0.25, 5, -5, 0.25, 5, 5, 0.25, -5, 5, -0.25, 5, 5, 0.25, 5)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Ground_Light" parent="." instance=ExtResource("1_qyqa3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.495, -0.117, 0.004)
+
+[node name="Ground_Light2" parent="." instance=ExtResource("1_qyqa3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.56155, -0.116623, 0.00382769)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8w03s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.438371, 0.577734, 0.688516, 0, -0.766044, 0.642788, 0.898794, -0.28178, -0.335812, 2.30369, 3.20921, -0.058455)
+
+[node name="Cube_Up" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0727622, 1.34724, -4.85421)
+script = ExtResource("2_6ibnn")
+
+[node name="Cube_Down" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.073, 0.0488098, -4.617)
+script = ExtResource("3_6m0bn")
+
+[node name="Cube_Right" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.943, 0.339, -3.783)
+script = ExtResource("4_5uvek")
+
+[node name="Cube_Left" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.943, 0.339, -3.783)
+script = ExtResource("5_mgorc")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_1hkag")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+unique_name_in_owner = true
+
+[node name="XRController3DLeft" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="leftsaber" parent="XROrigin3D/XRController3DLeft" instance=ExtResource("7_eo5kn")]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+script = ExtResource("8_kt0ce")
+
+[node name="XRController3DRight" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="MovementTurn" parent="XROrigin3D/XRController3DRight" instance=ExtResource("9_xv5tn")]
+
+[node name="rightsaber" parent="XROrigin3D/XRController3DRight" instance=ExtResource("10_ywbp3")]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+script = ExtResource("11_7p3r0")
+
+[node name="PlayerBody" parent="XROrigin3D" instance=ExtResource("12_ppel7")]
+unique_name_in_owner = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="XROrigin3D/PlayerBody"]
+stream = ExtResource("13_sdi2y")
+autoplay = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="XROrigin3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CSGBox3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00121117, -0.51572, -0.00232077)
+material_override = SubResource("StandardMaterial3D_jtb88")
+mesh = SubResource("BoxMesh_p2egm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("ConvexPolygonShape3D_p6yrf")

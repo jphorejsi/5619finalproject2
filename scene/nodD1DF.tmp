@@ -1,0 +1,111 @@
+[gd_scene load_steps=15 format=3 uid="uid://i0uieqtobhtl"]
+
+[ext_resource type="Script" path="res://scipts/InitializeXR.gd" id="1_o87v7"]
+[ext_resource type="Script" path="res://CSGSphere3D.gd" id="1_skls8"]
+[ext_resource type="PackedScene" uid="uid://b4kad2kuba1yn" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="3_428ip"]
+[ext_resource type="Script" path="res://scipts/initialize_webxr.gd" id="3_dali0"]
+[ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="4_i8xwn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r0dak"]
+sky_top_color = Color(0.717647, 0, 0.0352941, 1)
+sky_horizon_color = Color(0.729412, 0.54225, 0.542073, 1)
+ground_horizon_color = Color(0.729412, 0.54225, 0.542073, 1)
+
+[sub_resource type="Sky" id="Sky_dpt8a"]
+sky_material = SubResource("ProceduralSkyMaterial_r0dak")
+
+[sub_resource type="Environment" id="Environment_8w03s"]
+background_mode = 2
+sky = SubResource("Sky_dpt8a")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xcdia"]
+albedo_color = Color(0.670588, 0.643137, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_080f6"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcxnv"]
+albedo_color = Color(1, 0.403922, 0.478431, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1g3hk"]
+albedo_color = Color(0, 1, 0.403922, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_keh16"]
+albedo_color = Color(0.913725, 0.733333, 0, 1)
+metallic = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_on8o2"]
+albedo_color = Color(0, 0.474136, 0.846037, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8w03s")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -0.5, 0)
+material = SubResource("StandardMaterial3D_xcdia")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000134468, 1.46416, -3.0128)
+material = SubResource("StandardMaterial3D_080f6")
+script = ExtResource("1_skls8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.438371, 0.577734, 0.688516, 0, -0.766044, 0.642788, 0.898794, -0.281779, -0.335812, 2.30369, 3.20921, -0.058455)
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+script = ExtResource("1_o87v7")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="XRController3DLeft" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="XROrigin3D/XRController3DLeft" instance=ExtResource("3_428ip")]
+hand_material_override = SubResource("StandardMaterial3D_jcxnv")
+
+[node name="XRController3DRight" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="RightHand" parent="XROrigin3D/XRController3DRight" instance=ExtResource("4_i8xwn")]
+hand_material_override = SubResource("StandardMaterial3D_jcxnv")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.11336, 0.952207, 10.9038)
+size = Vector3(10, 6, 10)
+material = SubResource("StandardMaterial3D_1g3hk")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.074563, 3.55474, 15.9098)
+polygon = PackedVector2Array(-9.01158, 0.378543, -4.89983, 1.94898, -4.89087, 1.95664, 0.973681, 0.401231)
+depth = 10.0
+material = SubResource("StandardMaterial3D_keh16")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.41284, 0.848806, 6.16065)
+size = Vector3(2, 2, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.836487, 2.9626, 6.37712)
+material = SubResource("StandardMaterial3D_on8o2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("3_dali0")
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -75.0
+offset_right = 150.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Enter VR"

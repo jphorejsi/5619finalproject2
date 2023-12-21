@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqqbwkpowpx8s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvpgg"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gfcl7"]
+material = SubResource("StandardMaterial3D_wvpgg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0e6c"]
+albedo_color = Color(0, 0.682353, 1, 1)
+emission_enabled = true
+emission = Color(0, 0.278431, 1, 1)
+emission_energy_multiplier = 7.51
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mm75u"]
+material = SubResource("StandardMaterial3D_l0e6c")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3o60u"]
+
+[node name="leftsaber" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0, 0, 0)
+mesh = SubResource("CylinderMesh_gfcl7")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.03, 0, 0, 0, 0.3, 0, 0, 0, 0.03, 0, 0.3, 0)
+mesh = SubResource("CylinderMesh_mm75u")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/Area3D"]
+shape = SubResource("CylinderShape3D_3o60u")

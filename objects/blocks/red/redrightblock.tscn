@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://cg7yb6ou1doc3"]
+
+[ext_resource type="Material" uid="uid://xj2jo3uijkbl" path="res://objects/blocks/red/Red.tres" id="1_wjf3r"]
+[ext_resource type="Material" uid="uid://yvm7d6nvb322" path="res://objects/blocks/red/white_arrow.tres" id="2_vn3c5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0x2yd"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uijtj"]
+material = SubResource("StandardMaterial3D_0x2yd")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dh38g"]
+size = Vector3(1, 0.15, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mwb0f"]
+size = Vector3(1, 0.855, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_fkcy1"]
+material = ExtResource("2_vn3c5")
+
+[node name="redrightblock" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.38498e-09, 0.2, 0, -0.2, 2.38498e-09, 0, 0, 0, 0.2, 0, 0, 0)
+material_override = ExtResource("1_wjf3r")
+mesh = SubResource("BoxMesh_uijtj")
+
+[node name="CorrectArea3D" type="Area3D" parent="MeshInstance3D"]
+
+[node name="CorrectCollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/CorrectArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.425, 0)
+shape = SubResource("BoxShape3D_dh38g")
+
+[node name="MissArea3D" type="Area3D" parent="MeshInstance3D"]
+
+[node name="MissCollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/MissArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.075, 0)
+shape = SubResource("BoxShape3D_mwb0f")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.78873e-09, 0.15, 0, -0.15, 1.78873e-09, 0, 0, 0, 0.02, 0, 0, 0.1)
+mesh = SubResource("PrismMesh_fkcy1")
