@@ -1,0 +1,164 @@
+[gd_scene load_steps=20 format=3 uid="uid://d46wrkgdeynk"]
+
+[ext_resource type="Script" path="res://scripts/initialize.gd" id="1_bgrny"]
+[ext_resource type="PackedScene" uid="uid://dw2kfbg15qqeu" path="res://controllers/controller_l.fbx" id="2_y6mtq"]
+[ext_resource type="PackedScene" uid="uid://doel0ns5nc6bm" path="res://controllers/controller_r.fbx" id="3_hmebq"]
+[ext_resource type="Script" path="res://scripts/laser_pointer.gd" id="4_86lli"]
+[ext_resource type="Texture2D" uid="uid://cgapaa2jfxlp2" path="res://textures/holodeck.png" id="5_m318n"]
+[ext_resource type="Script" path="res://scripts/spatial_menu.gd" id="6_givta"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2iw24"]
+shading_mode = 0
+albedo_color = Color(0, 0.486275, 0.839216, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hmrib"]
+material = SubResource("StandardMaterial3D_2iw24")
+size = Vector3(0.004, 0.004, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_osj4q"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_noqmy"]
+sky_material = SubResource("ProceduralSkyMaterial_osj4q")
+
+[sub_resource type="Environment" id="Environment_pi0m0"]
+background_mode = 2
+sky = SubResource("Sky_noqmy")
+tonemap_mode = 2
+fog_density = 0.001
+fog_sky_affect = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_a8whk"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ym5vi"]
+shading_mode = 2
+albedo_color = Color(0.882353, 0.882353, 0.882353, 1)
+albedo_texture = ExtResource("5_m318n")
+uv1_scale = Vector3(100, 100, 1)
+texture_filter = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_trsr2"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nd2rd"]
+size = Vector3(4, 0.1, 2)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ajcdf"]
+viewport_path = NodePath("SpatialMenu/PlaneMesh/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yjye6"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_ajcdf")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_iwami"]
+size = Vector2(4, 2)
+
+[sub_resource type="Theme" id="Theme_2o20u"]
+default_font_size = 48
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_bgrny")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+far = 500.0
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 1.4, -0.4)
+tracker = &"left_hand"
+pose = &"aim"
+
+[node name="LeftControllerMesh" parent="XROrigin3D/LeftController" instance=ExtResource("2_y6mtq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.05)
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 1.4, -0.4)
+tracker = &"right_hand"
+pose = &"aim"
+
+[node name="RightControllerMesh" parent="XROrigin3D/RightController" instance=ExtResource("3_hmebq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.05)
+
+[node name="LaserPointer" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+mesh = SubResource("BoxMesh_hmrib")
+script = ExtResource("4_86lli")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pi0m0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_a8whk")
+surface_material_override/0 = SubResource("StandardMaterial3D_ym5vi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_trsr2")
+
+[node name="SpatialMenu" type="Area3D" parent="." groups=["spatial_menus"]]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.529, -5)
+script = ExtResource("6_givta")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpatialMenu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_nd2rd")
+
+[node name="PlaneMesh" type="MeshInstance3D" parent="SpatialMenu"]
+material_override = SubResource("StandardMaterial3D_yjye6")
+mesh = SubResource("PlaneMesh_iwami")
+skeleton = NodePath("../..")
+
+[node name="SubViewport" type="SubViewport" parent="SpatialMenu/PlaneMesh"]
+transparent_bg = true
+size = Vector2i(2048, 1024)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SpatialMenu/PlaneMesh/SubViewport"]
+
+[node name="ColorRect" type="ColorRect" parent="SpatialMenu/PlaneMesh/SubViewport/CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1024.0
+offset_top = -512.0
+offset_right = 1024.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.180392, 0.572549, 0.572549, 0.501961)
+
+[node name="Button" type="Button" parent="SpatialMenu/PlaneMesh/SubViewport/CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -125.0
+offset_right = 250.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_2o20u")
+text = "Hello world!"
+
+[connection signal="input_vector2_changed" from="XROrigin3D/LeftController" to="XROrigin3D" method="_process_input"]
+[connection signal="button_pressed" from="XROrigin3D/RightController" to="XROrigin3D/RightController/LaserPointer" method="_on_controller_button_pressed" binds= [true]]
+[connection signal="button_released" from="XROrigin3D/RightController" to="XROrigin3D/RightController/LaserPointer" method="_on_controller_button_pressed" binds= [false]]
+[connection signal="input_vector2_changed" from="XROrigin3D/RightController" to="XROrigin3D" method="_process_input"]
+[connection signal="pressed" from="SpatialMenu/PlaneMesh/SubViewport/CanvasLayer/Button" to="SpatialMenu" method="_on_button_pressed"]

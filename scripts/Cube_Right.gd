@@ -21,11 +21,11 @@ func _process(delta):
 	# print(cubes.size())
 	var rand = randf()
 	
-	if rand < 0.01:
+	if rand < 0.01/2:
 		var cube_instance = spawn_cube(cube_scene_r)
 		cube_instance.add_to_group("reds")
 		# cubes.append(cube_instance)
-	if rand >= 0.01 and rand < 0.02:
+	if rand >= 0.01/2 and rand < 0.02/2:
 		var cube_instance = spawn_cube(cube_scene)
 		cube_instance.add_to_group("blues")
 
@@ -48,6 +48,6 @@ func move_cube(cube_instance, delta):
 			# cubes.erase(cubes.find(cube_instance))
 			cube_instance.queue_free()
 		elif not cube_instance.is_queued_for_deletion():
-			cube_instance.position.z += 0.05
+			cube_instance.position.z += 0.01
 		# Move the cube towards the player in the process function
 		# cube_instance.translate(Vector3(0, 0, 1 * speed * delta))
