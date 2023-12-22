@@ -35,6 +35,8 @@ func _process(delta):
 		var saber = self.find_child("Area3D") as Area3D
 		if correct.overlaps_area(saber):
 			object.queue_free()
+			var sound = self.get_child(2)
+			sound.play()
 	
 func non_linear_map(distance: float) -> float:
 	if distance < D:

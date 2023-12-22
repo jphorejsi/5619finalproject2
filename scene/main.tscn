@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://i0uieqtobhtl"]
+[gd_scene load_steps=20 format=3 uid="uid://i0uieqtobhtl"]
 
 [ext_resource type="Script" path="res://scene/maingame.gd" id="1_bwrur"]
 [ext_resource type="PackedScene" uid="uid://tkl58qa3nud2" path="res://scene/groundlight.tscn" id="1_qyqa3"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bqqbwkpowpx8s" path="res://objects/sabers/leftsaber.tscn" id="7_eo5kn"]
 [ext_resource type="Script" path="res://scripts/leftsaber.gd" id="8_kt0ce"]
 [ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="9_xv5tn"]
+[ext_resource type="AudioStream" uid="uid://bwuxygkwal4mh" path="res://scene/crash-2-lightsaber-101soundboards.mp3" id="10_snkfm"]
 [ext_resource type="PackedScene" uid="uid://i71x7k7aqn0j" path="res://objects/sabers/rightsaber.tscn" id="10_ywbp3"]
 [ext_resource type="Script" path="res://scripts/rightsaber.gd" id="11_7p3r0"]
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="12_ppel7"]
@@ -72,6 +73,10 @@ tracker = &"left_hand"
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
 script = ExtResource("8_kt0ce")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="XROrigin3D/XRController3DLeft/leftsaber"]
+stream = ExtResource("10_snkfm")
+volume_db = -3.0
+
 [node name="XRController3DRight" type="XRController3D" parent="XROrigin3D"]
 tracker = &"right_hand"
 
@@ -80,6 +85,11 @@ tracker = &"right_hand"
 [node name="rightsaber" parent="XROrigin3D/XRController3DRight" instance=ExtResource("10_ywbp3")]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
 script = ExtResource("11_7p3r0")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="XROrigin3D/XRController3DRight/rightsaber"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0)
+stream = ExtResource("10_snkfm")
+volume_db = -3.0
 
 [node name="PlayerBody" parent="XROrigin3D" instance=ExtResource("12_ppel7")]
 unique_name_in_owner = true

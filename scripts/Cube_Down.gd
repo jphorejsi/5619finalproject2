@@ -35,7 +35,7 @@ func _process(delta):
 
 	for cube_instance in self.get_children():
 		move_cube(cube_instance,delta)
-		# print(cube_instance.position)	
+		# print(cube_instance.position)
 	spawn_cd -= 1
 
 func spawn_cube(cube):
