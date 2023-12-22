@@ -21,10 +21,12 @@ func _process(delta):
 		if rand < 0.5:
 			var cube_instance = spawn_cube(cube_scene)
 			cube_instance.add_to_group("blues")
+			cube_instance.transform.origin.y += randf_range(-0.5, 1.5)
 			# cubes.append(cube_instance)
 		if rand >= 0.5:
 			var cube_instance = spawn_cube(cube_scene_r)
 			cube_instance.add_to_group("reds")
+			cube_instance.transform.origin.y += randf_range(-0.5, 1.5)
 		spawn_cd = randi_range(240, 480)
 
 	for cube_instance in self.get_children():
