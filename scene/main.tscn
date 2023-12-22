@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://i0uieqtobhtl"]
+[gd_scene load_steps=18 format=3 uid="uid://i0uieqtobhtl"]
 
 [ext_resource type="PackedScene" uid="uid://tkl58qa3nud2" path="res://scene/groundlight.tscn" id="1_qyqa3"]
 [ext_resource type="Script" path="res://scripts/Cubeup_Up.gd" id="2_6ibnn"]
@@ -13,26 +13,15 @@
 [ext_resource type="Script" path="res://scripts/rightsaber.gd" id="11_7p3r0"]
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="12_ppel7"]
 [ext_resource type="AudioStream" uid="uid://bp8jjnpdpxek2" path="res://scene/Healing.mp3" id="13_sdi2y"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r0dak"]
-sky_top_color = Color(0.388235, 0, 0.960784, 1)
-sky_horizon_color = Color(0.729412, 0.54225, 0.542073, 1)
-ground_horizon_color = Color(0.729412, 0.54225, 0.542073, 1)
-
-[sub_resource type="Sky" id="Sky_dpt8a"]
-sky_material = SubResource("ProceduralSkyMaterial_r0dak")
+[ext_resource type="Material" uid="uid://0n4rmtpeq4rd" path="res://scene/floorcolor.tres" id="14_ac2w1"]
 
 [sub_resource type="Environment" id="Environment_8w03s"]
 background_mode = 2
-sky = SubResource("Sky_dpt8a")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jtb88"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_p2egm"]
-size = Vector3(10, 0.5, 10)
+[sub_resource type="PlaneMesh" id="PlaneMesh_353nf"]
+size = Vector2(100, 100)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_p6yrf"]
 points = PackedVector3Array(-5, -0.25, -5, -5, 0.25, -5, 5, -0.25, -5, -5, -0.25, 5, -5, 0.25, 5, 5, 0.25, -5, 5, -0.25, 5, 5, 0.25, 5)
@@ -103,9 +92,9 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="CSGBox3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00121117, -0.51572, -0.00232077)
-material_override = SubResource("StandardMaterial3D_jtb88")
-mesh = SubResource("BoxMesh_p2egm")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001, -0.25, -0.002)
+material_override = ExtResource("14_ac2w1")
+mesh = SubResource("PlaneMesh_353nf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

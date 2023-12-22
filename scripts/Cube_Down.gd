@@ -1,9 +1,13 @@
 extends Node3D
-
 @onready var cube_scene = preload("res://objects/blocks/blue/bluedownblock.tscn")
 @onready var cube_scene_r = preload("res://objects/blocks/red/reddownblock.tscn")
+
 @onready var player = $%PlayerBody  # Replace with the actual path to your player node
 # var cubes = []
+var spawn_cd = 0
+var temp =  0
+var spawn_high = 240
+var spawn_low = 120
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,19 +18,23 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	# print(cubes.size())
-	var rand = randf()
-	
-	if rand < 0.01/2:
-		var cube_instance = spawn_cube(cube_scene)
-		cube_instance.add_to_group("blues")
-		# cubes.append(cube_instance)
-	if rand >= 0.01/2 and rand < 0.02/2:
-		var cube_instance = spawn_cube(cube_scene_r)
-		cube_instance.add_to_group("reds")
+	print(spawn_cd)
+	if spawn_cd == 0:
+		var rand = randf()
+
+		if rand < 0.5:
+			var cube_instance = spawn_cube(cube_scene)
+			cube_instance.add_to_group("blues")
+			# cubes.append(cube_instance)
+		if rand >= 0.5:
+			var cube_instance = spawn_cube(cube_scene_r)
+			cube_instance.add_to_group("reds")
+		spawn_cd = randi_range(240, 480)
 
 	for cube_instance in self.get_children():
 		move_cube(cube_instance,delta)
 		# print(cube_instance.position)	
+	spawn_cd -= 1
 
 func spawn_cube(cube):
 	var cube_instance = cube.instantiate()

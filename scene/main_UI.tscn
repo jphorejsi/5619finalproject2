@@ -1,10 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://d46wrkgdeynk"]
+[gd_scene load_steps=19 format=3 uid="uid://d46wrkgdeynk"]
 
 [ext_resource type="Script" path="res://scripts/initialize.gd" id="1_bgrny"]
 [ext_resource type="PackedScene" uid="uid://dw2kfbg15qqeu" path="res://controllers/controller_l.fbx" id="2_y6mtq"]
 [ext_resource type="PackedScene" uid="uid://doel0ns5nc6bm" path="res://controllers/controller_r.fbx" id="3_hmebq"]
 [ext_resource type="Script" path="res://scripts/laser_pointer.gd" id="4_86lli"]
-[ext_resource type="Texture2D" uid="uid://cgapaa2jfxlp2" path="res://textures/holodeck.png" id="5_m318n"]
+[ext_resource type="Material" uid="uid://0n4rmtpeq4rd" path="res://scene/floorcolor.tres" id="5_qvr3o"]
 [ext_resource type="Script" path="res://scripts/spatial_menu.gd" id="6_givta"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2iw24"]
@@ -32,13 +32,6 @@ fog_sky_affect = 0.0
 [sub_resource type="PlaneMesh" id="PlaneMesh_a8whk"]
 size = Vector2(100, 100)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ym5vi"]
-shading_mode = 2
-albedo_color = Color(0.882353, 0.882353, 0.882353, 1)
-albedo_texture = ExtResource("5_m318n")
-uv1_scale = Vector3(100, 100, 1)
-texture_filter = 5
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_trsr2"]
 size = Vector3(100, 1, 100)
 
@@ -50,8 +43,8 @@ viewport_path = NodePath("SpatialMenu/PlaneMesh/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yjye6"]
 resource_local_to_scene = true
-transparency = 1
 shading_mode = 0
+albedo_color = Color(0.639216, 0.160784, 1, 1)
 albedo_texture = SubResource("ViewportTexture_ajcdf")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_iwami"]
@@ -103,7 +96,7 @@ shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("PlaneMesh_a8whk")
-surface_material_override/0 = SubResource("StandardMaterial3D_ym5vi")
+surface_material_override/0 = ExtResource("5_qvr3o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -155,7 +148,7 @@ offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_2o20u")
-text = "Hello world!"
+text = "Start Game!"
 
 [connection signal="input_vector2_changed" from="XROrigin3D/LeftController" to="XROrigin3D" method="_process_input"]
 [connection signal="button_pressed" from="XROrigin3D/RightController" to="XROrigin3D/RightController/LaserPointer" method="_on_controller_button_pressed" binds= [true]]
