@@ -2,17 +2,12 @@ extends Node3D
 
 @onready var cube_scene = preload("res://objects/blocks/blue/bluerightblock.tscn")
 @onready var cube_scene_r = preload("res://objects/blocks/red/redrightblock.tscn")
-
-# @onready var player = get_node("/root/XROrigin3D")
 @onready var player2 = $%XROrigin3D as XROrigin3D
-  # Replace with the actual path to your player node
-# var cubes = []
+signal health_loss()
 var spawn_cd = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# var cube_instance = spawn_cube()
-	# cubes.append(cube_instance)
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -51,6 +46,7 @@ func move_cube(cube_instance, delta):
 		if cube_instance.transform.origin.z >= 6.0:
 			# cubes.erase(cubes.find(cube_instance))
 			cube_instance.queue_free()
+			emit_signal("health_loss")
 		elif not cube_instance.is_queued_for_deletion():
 			cube_instance.position.z += 0.01
 		# Move the cube towards the player in the process function

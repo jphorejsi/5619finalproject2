@@ -3,7 +3,6 @@ extends Node3D
 var K : float = 2.0 # Adjust this value (0 < k < 1) to control the non-linearity
 var D : float = 0.1 # The threshold distance for linear mapping
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -36,6 +35,7 @@ func _process(delta):
 		var saber = self.find_child("Area3D") as Area3D
 		if correct.overlaps_area(saber):
 			object.queue_free()
+
 
 func non_linear_map(distance: float) -> float:
 	if distance < D:

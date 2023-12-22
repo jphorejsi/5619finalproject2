@@ -2,10 +2,11 @@ extends Node3D
 
 var xr_interface: XRInterface
 
+
 func _ready():
 	xr_interface = XRServer.find_interface("OpenXR")
 	if xr_interface and xr_interface.is_initialized():
-		print("OpenXR initialized successfully!")
+		# print("OpenXR initialized successfully!")
 
 		# Turn off v-sync!
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -14,3 +15,6 @@ func _ready():
 		get_viewport().use_xr = true
 	else:
 		print("OpenXR not initialized. Please check if your headset is connected.")
+
+
+	

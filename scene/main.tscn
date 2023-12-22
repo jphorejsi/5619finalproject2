@@ -1,5 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://i0uieqtobhtl"]
+[gd_scene load_steps=19 format=3 uid="uid://i0uieqtobhtl"]
 
+[ext_resource type="Script" path="res://scene/maingame.gd" id="1_bwrur"]
 [ext_resource type="PackedScene" uid="uid://tkl58qa3nud2" path="res://scene/groundlight.tscn" id="1_qyqa3"]
 [ext_resource type="Script" path="res://scripts/Cubeup_Up.gd" id="2_6ibnn"]
 [ext_resource type="Script" path="res://scripts/Cube_Down.gd" id="3_6m0bn"]
@@ -27,6 +28,7 @@ size = Vector2(100, 100)
 points = PackedVector3Array(-5, -0.25, -5, -5, 0.25, -5, 5, -0.25, -5, -5, -0.25, 5, -5, 0.25, 5, 5, 0.25, -5, 5, -0.25, 5, 5, 0.25, 5)
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_bwrur")
 
 [node name="Ground_Light" parent="." instance=ExtResource("1_qyqa3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.495, -0.117, 0.004)
@@ -99,3 +101,8 @@ mesh = SubResource("PlaneMesh_353nf")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("ConvexPolygonShape3D_p6yrf")
+
+[connection signal="health_loss" from="Cube_Up" to="." method="health_loss"]
+[connection signal="health_loss" from="Cube_Down" to="." method="health_loss"]
+[connection signal="health_loss" from="Cube_Right" to="." method="health_loss"]
+[connection signal="health_loss" from="Cube_Left" to="." method="health_loss"]

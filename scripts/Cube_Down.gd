@@ -3,6 +3,8 @@ extends Node3D
 @onready var cube_scene_r = preload("res://objects/blocks/red/reddownblock.tscn")
 
 @onready var player = $%PlayerBody  # Replace with the actual path to your player node
+signal health_loss()
+
 # var cubes = []
 var spawn_cd = 0
 var temp =  0
@@ -18,7 +20,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	# print(cubes.size())
-	print(spawn_cd)
+	# print(spawn_cd)
 	if spawn_cd == 0:
 		var rand = randf()
 
@@ -47,6 +49,7 @@ func move_cube(cube_instance, delta):
 		if cube_instance.transform.origin.z >= 6.0:
 			# cubes.erase(cubes.find(cube_instance))
 			cube_instance.queue_free()
+			emit_signal("health_loss")
 		elif not cube_instance.is_queued_for_deletion():
 			cube_instance.position.z += 0.025
 		# Move the cube towards the player in the process function

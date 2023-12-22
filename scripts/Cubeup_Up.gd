@@ -5,6 +5,7 @@ extends Node3D
 @onready var player = $%PlayerBody  # Replace with the actual path to your player node
 # var cubes = []
 var spawn_cd = 0
+signal health_loss()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# var cube_instance = spawn_cube()
@@ -42,6 +43,7 @@ func move_cube(cube_instance, delta):
 		if cube_instance.transform.origin.z >= 6.0:
 			# cubes.erase(cubes.find(cube_instance))
 			cube_instance.queue_free()
+			emit_signal("health_loss")
 		elif not cube_instance.is_queued_for_deletion():
 			cube_instance.position.z += 0.025
 		# Move the cube towards the player in the process function
