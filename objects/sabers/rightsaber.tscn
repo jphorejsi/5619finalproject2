@@ -16,6 +16,7 @@ emission_energy_multiplier = 7.15
 material = SubResource("StandardMaterial3D_rmqlv")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_58rfn"]
+margin = 0.08
 
 [node name="rightsaber" type="Node3D"]
 
