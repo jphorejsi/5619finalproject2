@@ -7,9 +7,10 @@ To initiate the game, connect your Quest device, launch Rift, and start the Godo
 
 Game Controls:
 Aim: Right controller
-Action: Press the button on the screen
+Action: Press the index button on the screen
+Turn: Adjust the camera position using the thumb joystick.
 
-Cube Spawn
+Cube Spawn:
 Cube spawning is determined by the position of their parent node and their subsequent movement towards the player's camera position. Two types of cubes, red and blue, are loaded through respective scripts (Cube_Red and Cube_Blue). Users have the flexibility to adjust the spawn rate by modifying the spawn_cd and block positions within each script.
 
 Cube Script Configuration:
