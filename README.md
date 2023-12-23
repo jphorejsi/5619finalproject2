@@ -13,14 +13,14 @@ lightsaber go-go technique uses XR technology and a non-linear mapping function 
 
 Game Controls:
 Aim: Right controller
-Action: Press the button on the screen
-Turn: Adjust camera position using the thumb joystick.
+Action: Press the index button on the screen
+Turn: Adjust the camera position using the thumb joystick.
 
-Cube Spawn
-Cube spawning is determined by the position of their parent node and their subsequent movement towards the player's camera position. Two types of cubes, red and blue, are loaded through respective scripts (Cube_Red and Cube_Blue). Users have the flexibility to adjust the spawn rate by modifying the spawn_cd and block positions within each script.
+Cube Spawn:
+Cube spawning is determined by the position of their parent node and their subsequent movement towards the player's camera position. Two types of cubes, red and blue, are loaded through respective scripts. Users have the flexibility to adjust the spawn rate by modifying the spawn_cd and block positions within each script.
 
 Cube Script Configuration:
-Each cube script (Cube_Red and Cube_Blue) provides customization options for users:
+Each cube script provides customization options for users:
 
 Spawn Rate: Adjust the spawn rate using spawn_cd.
 Block Position: Modify block positions according to your preference.
