@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://i0uieqtobhtl"]
+[gd_scene load_steps=20 format=3 uid="uid://i0uieqtobhtl"]
 
 [ext_resource type="Script" path="res://scene/maingame.gd" id="1_bwrur"]
 [ext_resource type="PackedScene" uid="uid://tkl58qa3nud2" path="res://scene/groundlight.tscn" id="1_qyqa3"]
@@ -27,23 +27,6 @@ size = Vector2(100, 100)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_p6yrf"]
 points = PackedVector3Array(-5, -0.25, -5, -5, 0.25, -5, 5, -0.25, -5, -5, -0.25, 5, -5, 0.25, 5, 5, 0.25, -5, 5, -0.25, 5, 5, 0.25, 5)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hk3ik"]
-points = PackedVector3Array(-1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0, 1)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_4ly0m"]
-viewport_path = NodePath("Area3D/MeshInstance3D/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xcwrd"]
-resource_local_to_scene = true
-albedo_color = Color(0.101961, 0.623529, 1, 1)
-albedo_texture = SubResource("ViewportTexture_4ly0m")
-emission_enabled = true
-emission = Color(0, 0.67451, 0, 1)
-emission_energy_multiplier = 0.0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_dkr64"]
-material = SubResource("StandardMaterial3D_xcwrd")
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_bwrur")
@@ -128,35 +111,6 @@ mesh = SubResource("PlaneMesh_353nf")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("ConvexPolygonShape3D_p6yrf")
-
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(0.715693, 0.698415, -3.05287e-08, 0, -4.37114e-08, -1, -0.698415, 0.715693, -3.12839e-08, -4.0191, 0.861808, -3.08865)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("ConvexPolygonShape3D_hk3ik")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, -1.77636e-15, 0, -1.77636e-15, 1, 0, 0, 0)
-mesh = SubResource("PlaneMesh_dkr64")
-
-[node name="SubViewport" type="SubViewport" parent="Area3D/MeshInstance3D"]
-size_2d_override_stretch = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Area3D/MeshInstance3D/SubViewport"]
-
-[node name="Button" type="Button" parent="Area3D/MeshInstance3D/SubViewport/CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -100.0
-offset_right = 150.0
-offset_bottom = 100.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Point"
 
 [connection signal="health_loss" from="Cube_Up" to="." method="health_loss"]
 [connection signal="health_loss" from="Cube_Down" to="." method="health_loss"]
