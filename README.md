@@ -2,7 +2,7 @@ Project Overview
 BeatSaber Skeleton with Gogo Technique Implementation
 In this project, we've created a skeleton version of BeatSaber, incorporating the innovative Gogo technique.
 
-Main Game
+Main Game:
 To initiate the game, connect your Quest device, launch Rift, and start the Godot project. Upon entry, the main game menu will appear, allowing players to utilize the right controller. Aim and press the button on the screen to enter the main game. In the main game, players wield two lightsabers, one red and one blue. The objective is to strike blocks that match the color of their lightsabers. After missing 30 blocks, the game will pause, and the player will be teleported back to the main menu to restart the game.
 
 Game Controls:
